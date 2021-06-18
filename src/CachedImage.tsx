@@ -31,6 +31,7 @@ const CachedImage = (props: IProps & typeof defaultProps) => {
 
   useEffect(() => {
     if (propsSource !== uri) {
+      setUri(undefined);
       load(props).catch();
     }
     /* eslint-disable react-hooks/exhaustive-deps */
