@@ -11,6 +11,7 @@ import CacheManager from './CacheManager';
 import { ImageProps, IProps } from './types';
 
 const AnimatedImage = Animated.createAnimatedComponent(RNImage);
+const AnimatedView = Animated.View;
 
 const defaultProps = {
   onError: () => {},
@@ -65,18 +66,20 @@ const CachedImage = (props: IProps & typeof defaultProps) => {
   };
 
   const onThumbnailLoad = () => {
-    Animated.timing(animatedLoadingImage, {
-      toValue: 0,
-      useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(animatedThumbnailImage, {
-        toValue: 1,
-        duration:
-          props.thumbnailAnimationDuration ||
-          CacheManager.config.thumbnailAnimationDuration,
+    setTimeout(() => {
+      Animated.timing(animatedLoadingImage, {
+        toValue: 0,
         useNativeDriver: true,
-      }).start();
-    });
+      }).start(() => {
+        Animated.timing(animatedThumbnailImage, {
+          toValue: 1,
+          duration:
+            props.thumbnailAnimationDuration ||
+            CacheManager.config.thumbnailAnimationDuration,
+          useNativeDriver: true,
+        }).start();
+      });
+    }, 5000);
   };
 
   const onImageError = (): void => setError(true);
@@ -93,7 +96,7 @@ const CachedImage = (props: IProps & typeof defaultProps) => {
 
   const {
     blurRadius,
-    loadingImageComponent,
+    loadingImageComponent: LoadingImageComponent,
     loadingImageStyle = props.style,
     loadingSource,
     resizeMode,
@@ -106,8 +109,17 @@ const CachedImage = (props: IProps & typeof defaultProps) => {
 
   return (
     <View style={styles.container}>
-      {loadingImageComponent ||
-        (loadingSource && !isImageReady && (
+      {!isImageReady &&
+        (LoadingImageComponent ? (
+          <AnimatedView
+            style={[
+              styles.loadingImageStyle,
+              { opacity: animatedLoadingImage },
+            ]}
+          >
+            <LoadingImageComponent />
+          </AnimatedView>
+        ) : (
           <View style={[styles.loadingImageStyle, style]}>
             <AnimatedImage
               resizeMode={resizeMode || 'contain'}

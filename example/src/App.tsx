@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback} from 'react';
+import { useCallback } from 'react';
 import {
   Alert,
   Button,
@@ -9,8 +9,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import {CachedImage, CacheManager} from '@georstat/react-native-image-cache';
-import {Dirs} from 'react-native-file-access';
+import { CachedImage, CacheManager } from '@georstat/react-native-image-cache';
+import { Dirs } from 'react-native-file-access';
+import ImagePlaceholder from './ImagePlaceholder';
 
 CacheManager.config = {
   baseDir: `${Dirs.CacheDir}/images_cache/`,
@@ -62,6 +63,7 @@ const App = () => {
           source={img}
           style={styles.image}
           thumbnailSource={imgThumb}
+          loadingImageComponent={ImagePlaceholder}
         />
       </View>
 
