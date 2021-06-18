@@ -5,6 +5,7 @@ import {
   Button,
   Image,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -23,10 +24,14 @@ CacheManager.config = {
 let img =
   'https://upload.wikimedia.org/wikipedia/commons/2/24/Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg';
 
-let imgThumb =
-  'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg/320px-Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg';
+// let imgThumb =
+//   'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg/320px-Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg';
+
+let img2 =
+  'https://images.unsplash.com/photo-1623849778517-668dffe703fb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format';
 
 const App = () => {
+  const [source, setSource] = React.useState(img);
   const clearCache = useCallback(async () => {
     try {
       await CacheManager.clearCache();
@@ -45,38 +50,55 @@ const App = () => {
     }
   }, []);
 
+  const changeSource = () => {
+    setSource(src => (src === img ? img2 : img));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Non Cached Image: (5.4MB)</Text>
-      <Image
-        resizeMode="cover"
-        source={{
-          uri: img,
-        }}
-        style={styles.image}
-      />
-      <Text style={styles.bottomText}>
-        Cached Image With Thumbnail: (5.4MB, thumb: 14KB)
-      </Text>
-      <View style={styles.cachedImageContainer}>
-        <CachedImage
-          source={img}
+      <ScrollView>
+        <Text style={styles.text}>Non Cached Image: (5.4MB)</Text>
+        <Image
+          resizeMode="cover"
+          source={{
+            uri: source,
+          }}
           style={styles.image}
-          thumbnailSource={imgThumb}
-          loadingImageComponent={ImagePlaceholder}
         />
-      </View>
+        <Text style={styles.bottomText}>
+          Cached Image With Thumbnail: (5.4MB, thumb: 14KB)
+        </Text>
+        <View style={styles.cachedImageContainer}>
+          <CachedImage
+            source={source}
+            style={styles.image}
+            blurRadius={1}
+            loadingImageComponent={ImagePlaceholder}
+          />
+        </View>
 
-      <View style={styles.clearCachButtonContainer}>
-        <Button color="white" onPress={clearCache} title="Clear Entire Cache" />
-      </View>
-      <View style={styles.clearCachButtonContainer}>
-        <Button
-          color="white"
-          onPress={clearSingleImageFromCache}
-          title="Clear only image"
-        />
-      </View>
+        <View style={styles.clearCachButtonContainer}>
+          <Button
+            color="white"
+            onPress={clearCache}
+            title="Clear Entire Cache"
+          />
+        </View>
+        <View style={styles.clearCachButtonContainer}>
+          <Button
+            color="white"
+            onPress={clearSingleImageFromCache}
+            title="Clear only image"
+          />
+        </View>
+        <View style={styles.clearCachButtonContainer}>
+          <Button
+            color="white"
+            onPress={changeSource}
+            title="Change Image source"
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

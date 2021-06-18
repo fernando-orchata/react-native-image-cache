@@ -41,7 +41,7 @@ export interface IProps {
   source: string;
   style?: StyleProp<ImageStyle>;
   thumbnailAnimationDuration?: number;
-  thumbnailSource: string;
+  thumbnailSource?: string;
 }
 
 export interface Config {
