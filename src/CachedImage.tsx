@@ -30,9 +30,9 @@ const CachedImage = (props: IProps & typeof defaultProps) => {
   const animatedLoadingImage = React.useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    if (propsSource !== uri) {
-      setUri(undefined);
+    if (propsSource !== uri && uri !== '') {
       load(props).catch();
+      setUri('');
     }
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [propsSource, uri]);
