@@ -21,13 +21,13 @@ CacheManager.config = {
   thumbnailAnimationDuration: 1000,
 };
 
-let img =
+const img =
   'https://upload.wikimedia.org/wikipedia/commons/2/24/Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg';
 
-// let imgThumb =
-//   'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg/320px-Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg';
+const imgThumb =
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg/320px-Willaerts_Adam_The_Embarkation_of_the_Elector_Palantine_Oil_Canvas-huge.jpg';
 
-let img2 =
+const img2 =
   'https://images.unsplash.com/photo-1623849778517-668dffe703fb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format';
 
 const App = () => {
@@ -70,28 +70,37 @@ const App = () => {
         </Text>
         <View style={styles.cachedImageContainer}>
           <CachedImage
+            source={img}
+            style={styles.image}
+            thumbnailSource={imgThumb}
+          />
+        </View>
+        <Text style={styles.bottomText}>
+          Cached Image With Custom Loading Placeholder: (5.4MB)
+        </Text>
+        <View style={styles.cachedImageContainer}>
+          <CachedImage
             source={source}
             style={styles.image}
             blurRadius={1}
             loadingImageComponent={ImagePlaceholder}
           />
         </View>
-
-        <View style={styles.clearCachButtonContainer}>
+        <View style={styles.clearCacheButtonContainer}>
           <Button
             color="white"
             onPress={clearCache}
             title="Clear Entire Cache"
           />
         </View>
-        <View style={styles.clearCachButtonContainer}>
+        <View style={styles.clearCacheButtonContainer}>
           <Button
             color="white"
             onPress={clearSingleImageFromCache}
             title="Clear only image"
           />
         </View>
-        <View style={styles.clearCachButtonContainer}>
+        <View style={styles.clearCacheButtonContainer}>
           <Button
             color="white"
             onPress={changeSource}
@@ -112,7 +121,7 @@ const styles = StyleSheet.create({
   cachedImageContainer: {
     alignItems: 'center',
   },
-  clearCachButtonContainer: {
+  clearCacheButtonContainer: {
     alignSelf: 'center',
     backgroundColor: 'red',
     marginTop: 30,

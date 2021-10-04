@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import {
   Animated,
   Image as RNImage,
@@ -17,9 +23,37 @@ const defaultProps = {
   onError: () => {},
 };
 
+function useIsComponentMounted() {
+  const isMounted = React.useRef(false);
+  // @ts-ignore
+  useEffect(() => {
+    isMounted.current = true;
+    return () => (isMounted.current = false);
+  }, []);
+  return isMounted;
+}
+
+function useStateIfMounted<S>(
+  initialState: S | (() => S)
+): [S, Dispatch<SetStateAction<S>>] {
+  const isComponentMounted = useIsComponentMounted();
+  const [state, setState] = React.useState(initialState);
+
+  const newSetState = useCallback(
+    value => {
+      if (isComponentMounted.current) {
+        setState(value);
+      }
+    },
+    [isComponentMounted]
+  );
+
+  return [state, newSetState];
+}
+
 const CachedImage = (props: IProps & typeof defaultProps) => {
-  const [error, setError] = React.useState<boolean>(false);
-  const [uri, setUri] = React.useState<string | undefined>(undefined);
+  const [error, setError] = useStateIfMounted<boolean>(false);
+  const [uri, setUri] = useStateIfMounted<string | undefined>(undefined);
   const { source: propsSource } = props;
   const [currentSource, setCurrentSource] = React.useState<string>(propsSource);
 
@@ -63,7 +97,7 @@ const CachedImage = (props: IProps & typeof defaultProps) => {
             nativeEvent: { error: new Error('Could not load image') },
           });
         }
-      } catch (e) {
+      } catch (e: any) {
         setError(true);
         onError({ nativeEvent: { error: e } });
       }
@@ -104,6 +138,15 @@ const CachedImage = (props: IProps & typeof defaultProps) => {
   };
 
   const {
+    accessibilityRole,
+    accessibilityRoleThumbnail,
+    accessibilityRoleLoadingSource,
+    accessibilityHint,
+    accessibilityHintLoadingImage,
+    accessibilityHintThumbnail,
+    accessibilityLabel,
+    accessibilityLabelLoadingImage,
+    accessibilityLabelThumbnail,
     blurRadius,
     loadingImageComponent: LoadingImageComponent,
     loadingImageStyle = props.style,
@@ -138,6 +181,10 @@ const CachedImage = (props: IProps & typeof defaultProps) => {
         ) : (
           <View style={[styles.loadingImageStyle]}>
             <AnimatedImage
+              accessibilityHint={accessibilityHintLoadingImage}
+              accessibilityLabel={accessibilityLabelLoadingImage}
+              accessibilityRole={accessibilityRoleLoadingSource || 'image'}
+              accessible
               resizeMode={resizeMode || 'contain'}
               style={[{ opacity: animatedLoadingImage }, loadingImageStyle]}
               // @ts-ignore
@@ -147,16 +194,24 @@ const CachedImage = (props: IProps & typeof defaultProps) => {
         ))}
       {thumbnailSource && (
         <AnimatedImage
+          accessibilityHint={accessibilityHintThumbnail}
+          accessibilityLabel={accessibilityLabelThumbnail}
+          accessibilityRole={accessibilityRoleThumbnail || 'image'}
+          accessible
           blurRadius={blurRadius || CacheManager.config.blurRadius}
           onLoad={onThumbnailLoad}
           resizeMode={resizeMode || 'contain'}
           source={{ uri: thumbnailSource }}
-          style={[{ opacity: animatedThumbnailImage }]}
+          style={[style, { opacity: animatedThumbnailImage }]}
         />
       )}
       {imageSource && (
         <AnimatedImage
           {...rest}
+          accessibilityHint={accessibilityHint}
+          accessibilityLabel={accessibilityLabel}
+          accessibilityRole={accessibilityRole || 'image'}
+          accessible
           onError={onImageError}
           onLoad={onImageLoad}
           resizeMode={resizeMode || 'contain'}
