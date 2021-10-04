@@ -17,7 +17,7 @@ const ImagePlaceholder = () => {
 
   const backgroundColor = animated.interpolate({
     inputRange: [0, 0.5, 1],
-    outputRange: ['#EDF1F7', '#e5ebf1', '#EDF1F7'],
+    outputRange: ['#EDF1F7', '#c7c9cc', '#EDF1F7'],
   });
 
   useEffect(() => {
@@ -34,8 +34,8 @@ const ImagePlaceholder = () => {
 
 const styles = StyleSheet.create({
   skeleton: {
-    width: 90,
-    height: 90,
+    width: 250,
+    height: 150,
     alignSelf: 'center',
     borderRadius: 6,
     backgroundColor: '#EDF1F7',

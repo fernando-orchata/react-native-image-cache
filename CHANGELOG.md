@@ -1,6 +1,57 @@
 # Changelog
 
-## [v1.2.3](https://github.com/georstat/react-native-image-cache/compare/v1.2.2...v1.2.3)
+## [v1.2.8](https://github.com/georstat/react-native-image-cache/compare/v1.2.7...v1.2.8)
+
+#### Improvements
+
+- chore: updated packages ([5e18298](https://github.com/georstat/react-native-image-cache/commit/5e182980b098daf710e13a0da9d513273603dfd0)).
+- chore: updated example packages ([88b190a](https://github.com/georstat/react-native-image-cache/commit/88b190ad84f592a9aeb6630d91eb60211bddb890)).
+
+#### Fixes
+
+- fix: thumbnail image should now show up, was missing `style` ([8358a6d](https://github.com/georstat/react-native-image-cache/commit/8358a6d7419d85abba3fe450726ece5b4d53daf4)).
+
+## [v1.2.7](https://github.com/georstat/react-native-image-cache/compare/v1.2.6...v1.2.7) - 2021-07-16
+
+#### Documentations
+
+- docs: added accessibility props ([b3ef531](https://github.com/georstat/react-native-image-cache/commit/b3ef531c216ac4a755cda44e823a0177a24e61f0)).
+- docs: made `remote` bold ([0527a47](https://github.com/georstat/react-native-image-cache/commit/0527a47dc709d404930d6e5e3304fa5a6811e6f1)).
+
+## [v1.2.6](https://github.com/georstat/react-native-image-cache/compare/v1.2.5...v1.2.6) - 2021-07-12
+
+#### Improvements
+
+- chore: added `useStateIfMounted` hook to prevent `Can't perform a React state update on an unmounted component.` warning ([833b331](https://github.com/georstat/react-native-image-cache/commit/833b331c2b7b85aab498daa33f81b05728504d85)).
+
+## [v1.2.5](https://github.com/georstat/react-native-image-cache/compare/v1.2.4...v1.2.5) - 2021-07-11
+
+#### Improvements
+
+- chore: added example with `loadingImageComponent` ([5396857](https://github.com/georstat/react-native-image-cache/commit/53968577ab95fcf90c9bb6366e733af564c978fe)).
+- chore: updated npm packages ([f63d354](https://github.com/georstat/react-native-image-cache/commit/f63d3547b307d3804624abd81e33aee9e434fca7)).
+- chore: updated example npm packages
+* prettier add bracket spacing ([9a7bb68](https://github.com/georstat/react-native-image-cache/commit/9a7bb680eccd0cb052221621855353818925dc42)).
+- chore: added native modules linking instructions on README ([f20b3cc](https://github.com/georstat/react-native-image-cache/commit/f20b3cc2db134687894b5c53979bff6316126ede)).
+
+#### Fixes
+
+- fix: infinite callback
+chore: improved loadingImageComponent behavior ([5fc9cbd](https://github.com/georstat/react-native-image-cache/commit/5fc9cbd57d8c05b8cdbe15cf2fd834e19d36e298)).
+- fix: fix `blacklist` module not found error ([aff0b65](https://github.com/georstat/react-native-image-cache/commit/aff0b653231797797a02847dab42c3f86da1bd4a)).
+
+## [v1.2.4](https://github.com/georstat/react-native-image-cache/compare/v1.2.3...v1.2.4) - 2021-07-06
+
+#### Improvements
+
+- chore: resolve conflicts ([3d254a0](https://github.com/georstat/react-native-image-cache/commit/3d254a0d043a5c4acbbf77e2df7075b7f30b0857)).
+- chore: bump react-native-file-access ([e3d8165](https://github.com/georstat/react-native-image-cache/commit/e3d81651978d42567a583f0760744410a7d51129)).
+
+#### Fixes
+
+- fix: example on android ([1e50e8b](https://github.com/georstat/react-native-image-cache/commit/1e50e8b60df7546e8d7e299145d5caa4ff2014ca)).
+
+## [v1.2.3](https://github.com/georstat/react-native-image-cache/compare/v1.2.2...v1.2.3) - 2021-06-05
 
 ## [v1.2.2](https://github.com/georstat/react-native-image-cache/compare/v1.2.1...v1.2.2) - 2021-06-05
 
